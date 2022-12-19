@@ -117,3 +117,17 @@ def save_as_nifti(array, filename, reference_image):
     image.SetDirection(reference_image.GetDirection())
     sitk.WriteImage(image, filename)
     
+## Bias field removal
+def bias_correct(inputImage):
+    inputImage = sitk.Cast(inputImage, sitk.sitkFloat32)
+    return sitk.N4BiasFieldCorrection(inputImage)
+
+# Intensity normalization
+def intensity_normalize(inputImage):
+    inputImage = sitk.Cast(inputImage, sitk.sitkFloat32)
+    return sitk.Normalize(inputImage)
+
+# Denoising filter
+def denoise(inputImage):
+    inputImage = sitk.Cast(inputImage, sitk.sitkFloat32)
+    return sitk.DiscreteGaussian(inputImage)
