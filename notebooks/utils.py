@@ -132,23 +132,3 @@ def denoise(inputImage):
     inputImage = sitk.Cast(inputImage, sitk.sitkFloat32)
     return sitk.DiscreteGaussian(inputImage)
 
-
-def read_image(repo_path, patient_id, type, images):
-    """Reads image from the dataset
-
-    Args:
-        patient_id (string): Patient id
-        image_type (string): Type of image to read
-        images (bool): If True returns SimpleITK image, if False returns numpy array
-        type (string): Type of image to read
-
-    Returns:
-        SimpleITK image: Image
-    """
-    image = sitk.ReadImage(str(repo_path / 'data' / type / f'IBSR_{patient_id}' / f'IBSR_{patient_id}.nii.gz'), sitk.sitkFloat32)
-    image_array = sitk.GetArrayFromImage(image)
-
-    if images == True:
-        return image
-    else:
-        return image_array
