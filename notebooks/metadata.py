@@ -42,6 +42,8 @@ class patient(ImageDataset):
         self.df = im_data.df.loc[im_data.df['ID'] == self.ID] #Filter by ID
         self.len = len(self.df)
         self.set_name = im_data.set_name
+        self.im_path = str(repo_path / self.im_paths()[0])
+        self.labels_path = str(repo_path / self.labels_paths()[0])
     
     def im(self, format:str = 'sitk'): 
         sitk_im = sitk.ReadImage(str(repo_path / self.im_paths()[0]))
