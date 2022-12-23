@@ -44,9 +44,18 @@ class patient(ImageDataset):
         self.set_name = im_data.set_name
         self.im_path = str(repo_path / self.im_paths()[0])
         self.labels_path = str(repo_path / self.labels_paths()[0])
+        self.im_path_preprocessed = str(Path(self.im_path).parent / (Path(self.im_path).parent.stem + '_preprocessed.nii.gz'))
+        self.im_path_norm = str(Path(self.im_path).parent / (Path(self.im_path).parent.stem + '_norm.nii.gz'))
     
-    def im(self, format:str = 'sitk'): 
-        sitk_im = sitk.ReadImage(str(repo_path / self.im_paths()[0]))
+    def im(self, format:str = 'sitk', preprocess = False): 
+        #first the preprocessing
+        if preprocess is False:
+            sitk_im = sitk.ReadImage(self.im_path)
+        elif preprocess is True:
+            sitk_im = sitk.ReadImage(self.im_path_norm)
+        else:
+            raise ValueError('Preprocess must be a boolean')    
+        #now the format
         if format=='sitk':
             return sitk_im
         elif format=='np':
