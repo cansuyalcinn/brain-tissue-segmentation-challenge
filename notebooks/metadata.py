@@ -74,9 +74,9 @@ class patient(ImageDataset):
         else:
             raise ValueError('Format not valid. Check allowed formats.')
     
-    def show(self, src:str = 'im' , slice :int = 135):
+    def show(self, src:str = 'im' , slice :int = 135, preprocess = False):
         if src=='im':
-            im = self.im(format='np')
+            im = self.im(format='np', preprocess=preprocess)
             cmap = 'gray'
         elif src=='labels':
             im = self.labels(format='np')
