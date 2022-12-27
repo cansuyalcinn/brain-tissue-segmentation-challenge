@@ -13,7 +13,7 @@ class ImageDataset():
         self.len = len(self.df)
         self.set_name = set_name
         self.IDs = list(self.df['ID'])
-    def im_paths(self):
+    def im_paths(self, preprocess = False):
         """get list of images paths
 
         Returns:
@@ -21,7 +21,7 @@ class ImageDataset():
         """
         folders_list = list(self.df['folder_path'])
         #add the path to the image
-        paths_list = [str(Path(x) / (Path(x).stem + '.nii.gz')) for x in folders_list]
+        paths_list = [str(Path(x) / (Path(x).stem + '.nii.gz')) for x in folders_list] if preprocess is False else [str(Path(x) / (Path(x).stem + '_norm.nii.gz')) for x in folders_list]
         return paths_list
     def labels_paths(self):
         """get list of images paths
