@@ -131,3 +131,15 @@ def intensity_normalize(inputImage):
 def denoise(inputImage):
     inputImage = sitk.Cast(inputImage, sitk.sitkFloat32)
     return sitk.DiscreteGaussian(inputImage)
+
+def scale_to_bin_ratio(normalized_array, bin_ratio):
+    """scales images using the bin_ratio so the output array has ine integer intensity values
+
+    Args:
+        normalized_array (array): image array normalised between 0 and 1
+        bin_ratio (float): ration ebtween the maximum intensity of the original image and the maximum intensity of the preprocessed image
+
+    Returns:
+        _type_: _description_
+    """
+    return np.rint(normalized_array/bin_ratio).astype(np.uint16)
