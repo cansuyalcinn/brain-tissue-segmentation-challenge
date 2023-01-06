@@ -30,7 +30,7 @@ class ImageDataset():
             list: list with images paths
         """
         if self.set_name == 'Test':
-            raise ValueError('Test set does not have labels! Pardon me!')
+            paths_list = ['Test set does not have labels! Pardon me!']
         folders_list = list(self.df['folder_path'])
         #add the path to the ground truth
         paths_list = [str(Path(x) / (Path(x).stem + '_seg.nii.gz')) for x in folders_list]

@@ -102,19 +102,20 @@ def get_testMask(id):
     return im
 
 # save the array as a new nifti image
-def save_as_nifti(array, filename, reference_image):
+def save_as_nifti(array, filename, reference_path, dtype = np.uint16):
     """Save array as nifti image
 
     Args:
         array (array): array to be saved
         filename (str): path to save
-        reference_image (str): path of reference image
+        reference_path (str): path of reference image
+        dtype (type, optional): data type of the array. Defaults to np.uint16.
     """
-    reference_image = sitk.ReadImage(reference_image)
-    image = sitk.GetImageFromArray(array)
-    image.SetOrigin(reference_image.GetOrigin())
-    image.SetSpacing(reference_image.GetSpacing())
-    image.SetDirection(reference_image.GetDirection())
+    reference_path = sitk.ReadImage(reference_path)
+    image = sitk.GetImageFromArray(array.astype(dtype))
+    image.SetOrigin(reference_path.GetOrigin())
+    image.SetSpacing(reference_path.GetSpacing())
+    image.SetDirection(reference_path.GetDirection())
     sitk.WriteImage(image, filename)
     
 ## Bias field removal
