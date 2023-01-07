@@ -188,3 +188,60 @@ def compute_hausdorff(groundT:np.ndarray, segmentation:np.ndarray, reference_sit
         HD_distances.append(distance)
         
     return HD_distances
+
+def compute_volume_difference(groundT:np.ndarray, segmentation:np.ndarray, reference_sitk:sitk.Image):
+    """compute volume_difference (aka volume similairty) between ground truth and segmentation
+    the inputs are arrays of the ground truth and segmentation and the reference_sitk is the sitk version of the ground truth
+
+    Args:
+        groundT (np.ndarray): gorund truth
+        segmentation (np.ndarray): segmentation array
+        reference_sitk (sitk.Image): refrence sitk image
+
+    Returns:
+        list: list of the volume difference for each tissue
+    """
+    vdiff= []
+    for tissue in range(1,4):
+        #first we convert the images back to sitk
+        groundT_tissue = (groundT==tissue).astype(np.uint8)
+        groundT_tissue = sitk_like(groundT_tissue, reference_sitk)
+        segmentation_tissue = (segmentation==tissue).astype(np.uint8)
+        segmentation_tissue = sitk_like(segmentation_tissue, reference_sitk)
+        #define the overlap filter
+        overlap_measures_filter = sitk.LabelOverlapMeasuresImageFilter()
+        #compute distance
+        overlap_measures_filter.Execute(groundT_tissue, segmentation_tissue)
+        distance = overlap_measures_filter.GetVolumeSimilarity()
+        #append in list
+        vdiff.append(distance)
+    
+    return vdiff
+
+
+def compute_metrics(segmentation:np.ndarray, pat_val:object, id_val:str):
+    """compute the three main metrics given segmentation array
+
+    Args:
+        segmentation (np.ndarray): segmentation array
+        pat_val (object): validation patient object
+
+    Returns:
+        pd.DataFrame: dataframe with all three metrics
+    """
+    #get gorund truth
+    groundT = pat_val.labels(format='np')
+    #compute the dice score
+    dice = [dice_score(groundT==tissue, segmentation==tissue) for tissue in range(1,4)]
+    #compute the hausdorff distance
+    hd = compute_hausdorff(groundT, segmentation, pat_val.labels(format='sitk'))
+    #compute the volume difference
+    vdiff = compute_volume_difference(groundT, segmentation, pat_val.labels(format='sitk'))
+    #save the dice score in a dataframe. The first column is the id_val, then CSF, GM, WM
+    df_dice = pd.DataFrame([[id_val] + dice + ['dice']], columns=['id_val', 'CSF', 'GM', 'WM', 'metric'])
+    df_hd = pd.DataFrame([[id_val] + hd + ['hd']], columns=['id_val', 'CSF', 'GM', 'WM', 'metric'])
+    df_vdiff = pd.DataFrame([[id_val] + vdiff + ['vdiff']], columns=['id_val', 'CSF', 'GM', 'WM', 'metric'])
+    #concatenate all three dataframes
+    df_metrics = pd.concat([df_dice, df_hd, df_vdiff], axis=0)
+    
+    return df_metrics
