@@ -144,3 +144,47 @@ def scale_to_bin_ratio(normalized_array, bin_ratio):
         _type_: _description_
     """
     return np.rint(normalized_array/bin_ratio).astype(np.uint16)
+
+def sitk_like(array:np.ndarray, reference_sitk:sitk.Image):
+    """takes an array and returns its sitk version copying the spacial info from the reference_sitk
+
+    Args:
+        array (np.ndarray): input array
+        reference_sitk (sitk.Image): reference sitk image
+
+    Returns:
+        sirk.Image: output sitk image
+    """
+    array_to_sitk = sitk.GetImageFromArray(array)
+    array_to_sitk.CopyInformation(reference_sitk)
+    
+    return array_to_sitk
+
+def compute_hausdorff(groundT:np.ndarray, segmentation:np.ndarray, reference_sitk:sitk.Image):
+    """compute hausdorff distance between ground truth and segmentation
+    the inputs are arrays of the ground truth and segmentation and the reference_sitk is the sitk version of the ground truth
+
+    Args:
+        groundT (np.ndarray): gorund truth
+        segmentation (np.ndarray): segmentation array
+        reference_sitk (sitk.Image): refrence sitk image
+
+    Returns:
+        list: list of the hausdorff distances for each tissue
+    """
+    HD_distances= []
+    for tissue in range(1,4):
+        #first we convert the images back to sitk
+        groundT_tissue = (groundT==tissue).astype(np.uint8)
+        groundT_tissue = sitk_like(groundT_tissue, reference_sitk)
+        segmentation_tissue = (segmentation==tissue).astype(np.uint8)
+        segmentation_tissue = sitk_like(segmentation_tissue, reference_sitk)
+        #define the HD filter
+        hausdorff_distance_filter = sitk.HausdorffDistanceImageFilter()
+        #compute distance
+        hausdorff_distance_filter.Execute(groundT_tissue, segmentation_tissue)
+        distance = hausdorff_distance_filter.GetHausdorffDistance()
+        #append in list
+        HD_distances.append(distance)
+        
+    return HD_distances
