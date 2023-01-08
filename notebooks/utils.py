@@ -48,6 +48,7 @@ def dice_score(img1,img2):
     dice = (2*np.sum(intersection))/(np.sum(union)+np.sum(intersection))
     return dice
 
+
 # Read patients in the test-set:
 def getPatientNum():
     """gets patients id number of the test set
