@@ -7,9 +7,9 @@ In this project, we performed segmentation of the three main brain tissues cereb
 brain MRI dataset of IBSR 18. Despite the challenges faced, such as different voxel sizes and intensity inhomogeneities, we were able to achieve successful results using both traditional approaches and deep learning methodologies.
 
 ## Authors of the project 
-- Ricardo Montoya Del Angel [github](https://github.com/Likalto4) | [linkedin](https://www.linkedin.com/in/ricardo-montoya-del-angel)
+- Ricardo Montoya Del Angel [github](https://github.com/Likalto4) | [linkedin](https://www.linkedin.com/in/ricardo-montoya-del-angel/)
 
-- Cansu Yalçın [github](https://github.com/cansuyalcinn) | [linkedin](www.linkedin.com/in/cansuyalcin)
+- Cansu Yalçın [github](https://github.com/cansuyalcinn) | [linkedin](https://www.linkedin.com/in/cansuyalcin/)
 
 - Alex Chicano [linkedin](https://www.linkedin.com/in/%C3%A0lex-chicano-83291a148/)
 
