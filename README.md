@@ -1,7 +1,7 @@
 # Brain tissue segmentation using Multi-atlas and Deep learning approaches
 
 The challenge was the final project of the Medical image segmentation course given in the University of Girona for the [MAIA programme](https://maiamaster.udg.edu/).
-The final report can be found [here](MISA_final_report.pdf).
+The final report can be found [here](Misa_final_report.pdf).
 
 In this project, we performed segmentation of the three main brain tissues cerebrospinal fluid (CSF), gray matter (GM) and white matter (WM), from the
 brain MRI dataset of IBSR 18. Despite the challenges faced, such as different voxel sizes and intensity inhomogeneities, we were able to achieve successful results using both traditional approaches and deep learning methodologies.
