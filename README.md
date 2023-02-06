@@ -14,7 +14,7 @@ In classical approaches, we applied three main experiments. Firstly, we applied 
 
 In the deep learning section, we experimented with the recent advanced U-net based algorithms. In this case, we applied 3 main architectures, namely, U-net and ResUnet and DenseUnet. Due to the size of the dataset, we decided to apply a patch based approach to train our model. To match the requirements of the semantic segmentation problem, we experimented with several loss functions such as focal loss, dice loss and categorical cross entropy loss.
 
-Overall, we were able to obtain the best results using the DenseUnet model with categorical cross entropy loss function reaching up to 0.84, 0.93 and 0.91 mean dice scores in the validation set for the tissues CSF, GM and WM sequentially.
+Overall, we were able to obtain the best results using the DenseUnet model with categorical cross entropy loss function reaching up to *0.84, 0.93 and 0.91* mean dice scores in the validation set for the tissues CSF, GM and WM sequentially.
 
 ## Segmentation results
 
