@@ -1,9 +1,12 @@
 # Brain tissue segmentation using Multi-atlas and Deep learning approaches
 
+The challenge was the final project of the Medical image segmentation course given in the University of Girona for the [MAIA programme](https://maiamaster.udg.edu/).
+The final report can be found [here](MISA_final_report.pdf).
+
 In this project, we performed segmentation of the three main brain tissues cerebrospinal fluid (CSF), gray matter (GM) and white matter (WM), from the
 brain MRI dataset of IBSR 18. Despite the challenges faced, such as different voxel sizes and intensity inhomogeneities, we were able to achieve successful results using both traditional approaches and deep learning methodologies.
 
-# Implementation
+## Implementation
 
 We followed two main pipelines; classical and deep learning approaches. 
  
@@ -13,7 +16,7 @@ In the deep learning section, we experimented with the recent advanced U-net bas
 
 Overall, we were able to obtain the best results using the DenseUnet model with categorical cross entropy loss function reaching up to 0.84, 0.93 and 0.91 mean dice scores in the validation set for the tissues CSF, GM and WM sequentially.
 
-# Results
+## Segmentation results
 
 |![img](brain-seg.PNG)|
 | :--: | 
